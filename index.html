@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deforestation Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('static/background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            font-style: italic;
+        }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: 'Choose Image';
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 20px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .custom-file-input:hover::before {
+            background: #0056b3;
+        }
+
+        .custom-file-input:active::before {
+            background: #0056b3;
+        }
+
+        .custom-file-input:hover {
+            cursor: pointer;
+        }
+
+        .custom-file-input {
+            display: inline-block;
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all file input elements
+            const fileInputs = document.querySelectorAll('.custom-file-input');
+
+            // Add event listener for each file input
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function (e) {
+                    const fileName = e.target.files[0].name;
+                    const label = e.target.nextElementSibling;
+                    label.innerHTML = fileName;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Deforestation Calculator</h1>
+    <p>This system will then monitor the spatial fields where there is a shortage of trees and provide us with restoration methods and ideas.</p>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="image_before">Before Image:</label>
+            <div class="custom-file">
+                <input type="file" name="image_before" id="image_before" class="custom-file-input">
+                <label class="custom-file-label" for="image_before">Choose file</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image_after">After Image:</label>
+            <div class="custom-file">
+                <input type="file" name="image_after" id="image_after" class="custom-file-input">
+                <label class="custom-file-label" for="image_after">Choose file</label>
+            </div>
+        </div>
+
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+</div>
+
+</body>
+</html>

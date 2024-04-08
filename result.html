@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deforestation Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('static/background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+        }
+
+        .container {
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            font-style: italic;
+        }
+
+        .result-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .result-chart {
+            width: 100%;
+            max-width: 60%;
+            margin: 20px auto;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        tr.even {
+            background-color: #dcdcdc;
+        }
+
+        .table-dark tbody tr {
+            color: black;
+            background-color: #e9ecef;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Deforestation Results</h1>
+    <p>The system has monitored the spatial fields where there is a shortage of trees and provided restoration methods and ideas.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h2>Deforestation Details:</h2>
+            <p><strong>Deforestation Percentage:</strong> {{ deforestation_percentage }}%</p>
+            <p><strong>Mean Pixel Intensity:</strong> {{ mean_pixel_intensity }}</p>
+            <p><strong>Contour Area:</strong> {{ contour_area }}</p>
+            <p><strong>Mean Squared Error:</strong> {{ mse }}</p>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ image_paths[0] }}" alt="Before Blurring" class="result-image">
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <img src="{{ image_paths[1] }}" alt="After Blurring" class="result-image">
+        </div>
+        <div class="col-md-6">
+            <img src="{{ image_paths[2] }}" alt="Thresholded Difference" class="result-image">
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2>Actual vs Predicted Deforestation Percentage:</h2>
+            <img src="{{ url_for('static', filename='plot.png') }}" alt="Actual vs Predicted Deforestation Percentage" class="result-chart">
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2>Restoration Methods:</h2>
+            <table class="table-dark">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Cost per meter (INR)</th>
+                        <th>Annual Cost (INR)</th>
+                        <th>Total Cost (INR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for method in methods %}
+                        <tr {% if loop.index is even %}class="even"{% endif %}>
+                            <td>{{ method.name }}</td>
+                            <td>{{ method.cost_per_meter }}</td>
+                            <td>{{ method.annual_cost }}</td>
+                            <td>{{ method.total_cost }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <th>Total</th>
+                        <th></th>
+                        <th></th>
+                        <th>{{ total_cost }}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a href="/" class="btn btn-primary mt-4">Calculate Again</a>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
